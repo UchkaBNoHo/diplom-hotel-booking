@@ -1,33 +1,104 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import Navbar from "./Navbar/Navbar";
-import image from "../../public/hero-img.jpg";
+import image from "/hero-img.jpg";
+import hotel1 from "/hotel-1.jpg";
+import hotel2 from "/hotel-2.jpg";
+import hotel3 from "/hotel-3.jpg";
+import hotel4 from "/hotel-4.jpg";
+import hotel5 from "/hotel-5.jpg";
+import hotel6 from "/hotel-6.jpg";
+import hotel7 from "/hotel-7.jpg";
 import Filter from "./filter/Filter";
+import Footer from "./Footer/Footer";
+import HotelCard from "./HotelCard/HotelCard";
 
 const Home = () => {
   return (
-    <main className="h-[10000px]">
+    <main className="max-[1400px]:px-8">
       {/* Navbar */}
       <Navbar />
-      <div className="relative w-[100vw] h-[520px]">
+      <div className="relative max-w-[1300px] m-auto h-[520px] px-12 max-[1140px]:h-[450px] max-[910px]:h-[400px] max-md:px-9 max-md:h-[350px] max-[560px]:px-5 max-[560px]:h-[360px]">
         <img
           src={image}
           alt=""
-          className="absolute inset-0 z-[-2] w-full h-full object-cover bg-bottom"
+          className="absolute inset-0 z-[-2] w-full h-full object-cover bg-bottom rounded-[20px]"
         />
-        <div className="absolute z-[-1] inset-0 bg-gradient-to-r from-black/50 to-transparent"></div>
-        <div className="w-full h-full max-w-[1300px] m-auto pt-[100px]">
-          <h1 className="text-white text-5xl max-w-[50%] leading-[70px] font-medium">
+        <div className="absolute z-[-1] inset-0 bg-gradient-to-r from-black/50 to-transparent rounded-[20px]"></div>
+        <div className="w-full h-full max-w-[1300px] m-auto pt-[100px] max-lg:pt-[84px] max-md:pt-[60px] max-[560px]:pt-[40px]">
+          <h1 className="text-white text-5xl max-w-[50%] leading-[70px] font-medium max-[1140px]:text-[42px] max-[1140px]:leading-[55px] max-lg:text-[38px] max-lg:leading-[48px] max-lg:max-w-[60%] max-[910px]:text-[32px] max-[910px]:leading-[40px] max-[910px]:max-w-[70%] max-md:text-[30px] max-[560px]:text-[26px] max-[560px]:leading-[34px]">
             Book With Us And Enjoy Your Journey!
           </h1>
-          <p className="text-white mt-1 font-light text-[17px]">
+          <p className="text-white mt-1 font-light text-[17px] max-[1140px]:text-[15px] max-[560px]:text-[13px]">
             Make your travel wishlist
           </p>
         </div>
       </div>
       <Filter />
 
-      {/* Fall into Travell */}
+      {/* 5-star Hotels */}
+      <div className="max-w-[1300px] m-auto">
+        <div className="mt-[8rem] flex justify-between items-center max-[1140px]:mt-[6rem] max-md:mt-[4rem] max-md:flex-col max-md:items-start max-md:gap-2">
+          <h1 className="text-4xl font-semibold w-[30%] leading-[1.4] max-xl:text-[30px] max-[1140px]:text-[26px] max-[910px]:w-[40%] max-md:w-[50%] max-md:text-[24px] max-[560px]:w-[80%]">
+            Explore Our 5-stars Hotel!
+          </h1>
+          <p className="text-[15px] text-gray-600 font-light w-[30%] max-[1140px]:text-[14px] max-[1140px]:w-[36%] max-md:w-[100%]">
+            Your vacation starts here. Book your stay and let us create an
+            experience you&lsquo;ll never forget.
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-between mt-7 gap-y-10">
+          <HotelCard
+            img={hotel1}
+            title="Golden Horizon Hotel"
+            address="Collingwood VIC"
+            price="1200"
+          />
+          <HotelCard
+            img={hotel2}
+            title="Whispering Wood Hotel"
+            address="New York, USA"
+            price="560"
+          />
+          <HotelCard
+            img={hotel3}
+            title="Sunset Lodge"
+            address="Ulaanbaatar, Mongolia"
+            price="12000"
+          />
+          <HotelCard
+            img={hotel4}
+            title="Enchanted Cottage"
+            address="Kuala Lumpur, Malaysia"
+            price="1750"
+          />
+          <HotelCard
+            img={hotel5}
+            title="Paradise Cove Retreat"
+            address="Tokyo, Japan"
+            price="2350"
+          />
+          <HotelCard
+            img={hotel6}
+            title="Emerald Valley Lodge"
+            address="New Zealand, Australia"
+            price="430"
+          />
+          <HotelCard
+            img={hotel7}
+            title="Future House"
+            address="Seoul, Korea"
+            price="1900"
+          />
+          <HotelCard
+            img={image}
+            title="Ocean Avenue"
+            address="Hovsgol, Mongolia"
+            price="34700"
+          />
+        </div>
+      </div>
+      <Footer />
     </main>
   );
 };

@@ -16,3 +16,15 @@ html {
 .bshadow {
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
+
+.cshadow {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+input[type="checkbox"] {
+    border: 1px solid white;
+}
+
+input[type="checkbox"].hidden:checked + label {
+    border: 1px solid black;
+}
