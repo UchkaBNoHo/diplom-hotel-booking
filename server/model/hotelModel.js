@@ -14,8 +14,8 @@ const HotelModel = new mongoose.Schema(
     imageUrls: [{ type: String, required: true }],
     latitude: { type: String, required: true },
     longitude: { type: String, required: true },
-    bedrooms: { type: Number, required: true },
-    bathroom: { type: Number, required: true },
+    bedrooms: { type: Number },
+    bathroom: { type: Number },
   },
   { timestamps: true }
 );

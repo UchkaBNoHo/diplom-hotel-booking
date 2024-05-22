@@ -38,13 +38,37 @@ exports.updateUser = async (req, res) => {
   const tokenUserId = req.userId;
   const body = req.body;
 
+  console.log(tokenUserId, id);
+
   if (id !== tokenUserId) {
     return res.status(403).json({ message: "Not Authorized!" });
   }
 
   try {
-    const updatedUser = await userModel.findByIdAndUpdate(id, body);
+    const updatedUser = await userModel.findByIdAndUpdate(id, body, {
+      new: true,
+    });
     res.status(200).json(updatedUser);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+exports.addLoved = async (req, res) => {
+  const id = req.params.id;
+  const tokenUserId = req.userId;
+
+  console.log(tokenUserId, id);
+
+  try {
+    const user = await userModel.findById(tokenUserId);
+
+    if (!user.lovedHotels.includes(id)) {
+      user.lovedHotels.push(id);
+    } else {
+      return res.status(400).json({ message: "Already loved this hotel" });
+    }
+    await user.save();
+    res.status(200).json({ message: "Hotel loved successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

@@ -6,6 +6,7 @@ import Login from "./src/components/Login";
 import Register from "./src/components/Register";
 import { listPageLoader } from "./src/lib/dataLoader";
 import Profile from "./src/components/Profile/Profile";
+import ProtectRoute from "./src/components/protectRoute/ProtectRoute";
 // import Login from "./src/components/Login";
 // import Register from "./src/components/Register";
 
@@ -25,11 +26,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <ProtectRoute>
+        <Login />
+      </ProtectRoute>
+    ),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <ProtectRoute>
+        <Register />
+      </ProtectRoute>
+    ),
   },
   {
     path: "/profile",

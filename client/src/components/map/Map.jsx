@@ -7,7 +7,7 @@ function Map({ posts }) {
   return (
     <MapContainer
       center={[52.4797, -1.90269]}
-      zoom={7}
+      zoom={4}
       scrollWheelZoom={false}
       className="w-full h-full"
     >

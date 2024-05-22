@@ -11,10 +11,13 @@ import { CgProfile } from "react-icons/cg";
 import { LiaHotelSolid } from "react-icons/lia";
 import { CiLogout } from "react-icons/ci";
 import { RxDashboard } from "react-icons/rx";
+import { IoLogIn } from "react-icons/io5";
 
 const Navbar = ({ isSingleHotel }) => {
   const { currentUser, updateUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  console.log(currentUser);
 
   // console.log(currentUser);
 
@@ -64,8 +67,8 @@ const Navbar = ({ isSingleHotel }) => {
             </Link>
           </div>
         )}
-        {currentUser && (
-          <>
+        {currentUser.token && (
+          <div className="relative z-10 flex items-center gap-5">
             <div className="pr-3 h-fit border-r-[1px] border-black flex gap-2 items-center max-[560px]:hidden">
               <MdOutlineFavorite className="text-xl cursor-pointer" />
               <h3 className="text-[13px] font-medium cursor-pointer">
@@ -81,7 +84,7 @@ const Navbar = ({ isSingleHotel }) => {
                 <IoIosMenu className="text-2xl cursor-pointer" />
                 <div className="avatar">
                   <div className="w-8 rounded-full">
-                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <img src={currentUser?.profilePicture} />
                   </div>
                 </div>
               </div>
@@ -93,28 +96,37 @@ const Navbar = ({ isSingleHotel }) => {
                   <RxDashboard className="text-[16px] cursor-pointer" />
                   <Link to="/dashboard">Dashboard</Link>
                 </div>
-                <div className="px-4 py-2 h-fit flex gap-3 items-center hover:bg-gray-100 hover:rounded-xl cursor-pointer">
+                <Link
+                  to="/profile"
+                  className="px-4 py-2 h-fit flex gap-3 items-center hover:bg-gray-100 hover:rounded-xl cursor-pointer"
+                >
                   <CgProfile className="text-[16px] cursor-pointer" />
-                  <Link to="/profile">Profile</Link>
-                </div>
-                <div className="px-4 py-2 h-fit flex gap-3 items-center hover:bg-gray-100 hover:rounded-xl cursor-pointer">
+                  <span>Profile</span>
+                </Link>
+                <Link
+                  to="/profile"
+                  className="px-4 py-2 h-fit flex gap-3 items-center hover:bg-gray-100 hover:rounded-xl cursor-pointer"
+                >
                   <LiaHotelSolid className="text-[16px] cursor-pointer" />
-                  <Link to="/profile">Add Hotel</Link>
-                </div>
-                <div className="pr-3 h-fit flex gap-2 items-center min-[561px]:hidden hover:bg-gray-100 hover:rounded-xl cursor-pointer">
+                  <span>Add Hotel</span>
+                </Link>
+                <Link
+                  to="/favourites"
+                  className="pr-3 h-fit flex gap-2 items-center min-[561px]:hidden hover:bg-gray-100 hover:rounded-xl cursor-pointer"
+                >
                   <MdOutlineFavorite className="text-[16px] cursor-pointer" />
-                  <a href="">Favourites</a>
-                </div>
+                  <span>Favourites</span>
+                </Link>
                 <div
                   className="px-4 py-2 h-fit flex gap-3 items-center hover:bg-gray-100 hover:rounded-xl cursor-pointer"
                   onClick={handleLogout}
                 >
                   <CiLogout className="text-[16px] cursor-pointer" />
-                  <Link to="/profile">Logout</Link>
+                  <span>Logout</span>
                 </div>
               </ul>
             </div>
-          </>
+          </div>
         )}
       </div>
     </nav>

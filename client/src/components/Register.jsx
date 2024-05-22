@@ -1,12 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import registerImg from "/register_img.jpg";
 import instance from "../../lib/axios";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
+import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
+  const { currentUser, updateUser } = useContext(AuthContext);
+
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +37,7 @@ const Register = () => {
         }
       );
 
-      localStorage.setItem("user", JSON.stringify(res.data));
+      updateUser(res.data);
 
       console.log(res);
 

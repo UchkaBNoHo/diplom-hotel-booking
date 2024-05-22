@@ -54,7 +54,7 @@ const SideCard = () => {
           </a>
         </div>
       </div>
-      <div className="mt-3 text-center rounded-[32px] bg-black py-3 px-12 fixed top-[90%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+      <div className="hidden mt-3 text-center rounded-[32px] bg-black py-3 px-12 fixed z-20 top-[90%] left-[50%] translate-x-[-50%] translate-y-[-50%] max-lg:block">
         <button
           className="text-white text-[14px]"
           onClick={() => document.getElementById("my_modal_2").showModal()}

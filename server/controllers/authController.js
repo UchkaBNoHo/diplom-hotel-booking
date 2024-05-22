@@ -41,7 +41,9 @@ exports.register = async (req, res) => {
 
     // JWT Token
 
-    let token = jwt.sign({ userId: user?._id }, "Uchka", { expiresIn: "10d" });
+    let token = jwt.sign({ userId: newUser?._id }, "Uchka", {
+      expiresIn: "10d",
+    });
     res.cookie("token", token);
     console.log(newUser);
     return res.status(200).json({
@@ -49,6 +51,10 @@ exports.register = async (req, res) => {
       token,
       userName,
       userId: newUser._id,
+      bio: newUser.bio,
+      lovedHotels: newUser.lovedHotels,
+      profilePicture: newUser.profilePicture,
+      email: newUser.email,
     });
   } catch (err) {
     console.log(err);
@@ -82,6 +88,10 @@ exports.login = async (req, res) => {
       token,
       userName: user.userName,
       userId: user._id,
+      bio: user.bio,
+      lovedHotels: user.lovedHotels,
+      profilePicture: user.profilePicture,
+      email: user.email,
     });
   } catch (error) {
     console.log(error);

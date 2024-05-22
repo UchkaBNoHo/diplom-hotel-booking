@@ -17,7 +17,7 @@ const Filter = () => {
   };
 
   return (
-    <section className="max-w-[1120px] m-auto bg-white rounded-[24px] mt-[-100px] px-6 py-4 pb-5 bshadow max-xl:w-[90%] max-md:w-full">
+    <section className="relative z-10 max-w-[1120px] m-auto bg-white rounded-[24px] mt-[-100px] px-6 py-4 pb-5 bshadow max-xl:w-[90%] max-md:w-full">
       <div className="flex gap-2 items-center">
         <MdHotelClass className="text-[24px] max-md:text-[20px]" />
         <h1 className="text-[20px] font-medium max-md:text-[17px]">Hotel</h1>

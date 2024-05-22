@@ -42,96 +42,91 @@ exports.getHotels = async (req, res) => {
   }
 };
 
-// export const getPost = async (req, res) => {
-//   const id = req.params.id;
-//   try {
-//     const post = await prisma.post.findUnique({
-//       where: { id },
-//       include: {
-//         postDetail: true,
-//         user: {
-//           select: {
-//             username: true,
-//             avatar: true,
-//           },
-//         },
-//       },
-//     });
+exports.getHotel = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const hotel = await hotelModel.findById(id);
 
-//     const token = req.cookies?.token;
+    // const token = req.cookies?.token;
 
-//     if (token) {
-//       jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
-//         if (!err) {
-//           const saved = await prisma.savedPost.findUnique({
-//             where: {
-//               userId_postId: {
-//                 postId: id,
-//                 userId: payload.id,
-//               },
-//             },
-//           });
-//           res.status(200).json({ ...post, isSaved: saved ? true : false });
-//         }
-//       });
-//     }
-//     res.status(200).json({ ...post, isSaved: false });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ message: "Failed to get post" });
-//   }
-// };
+    // if (token) {
+    //   jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
+    //     if (!err) {
+    //       const saved = await prisma.savedPost.findUnique({
+    //         where: {
+    //           userId_postId: {
+    //             postId: id,
+    //             userId: payload.id,
+    //           },
+    //         },
+    //       });
+    //       res.status(200).json({ ...post, isSaved: saved ? true : false });
+    //     }
+    //   });
+    // }
+    // res.status(200).json({ ...post, isSaved: false });
+    res.status(200).json(hotel);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to get hotel" });
+  }
+};
 
-// export const addPost = async (req, res) => {
-//   const body = req.body;
-//   const tokenUserId = req.userId;
+exports.addHotel = async (req, res) => {
+  const body = req.body;
+  const tokenUserId = req.userId;
 
-//   try {
-//     const newPost = await prisma.post.create({
-//       data: {
-//         ...body.postData,
-//         userId: tokenUserId,
-//         postDetail: {
-//           create: body.postDetail,
-//         },
-//       },
-//     });
-//     res.status(200).json(newPost);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ message: "Failed to create post" });
-//   }
-// };
+  try {
+    const newHotel = await hotelModel.create({
+      ...body,
+      ownerId: tokenUserId,
+    });
+    res.status(200).json(newHotel);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to create hotel" });
+  }
+};
 
-// export const updatePost = async (req, res) => {
-//   try {
-//     res.status(200).json();
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ message: "Failed to update posts" });
-//   }
-// };
+exports.updateHotel = async (req, res) => {
+  const id = req.params.id;
+  const hotel = await hotelModel.findById(id);
+  const tokenUserId = req.userId;
+  const body = req.body;
 
-// export const deletePost = async (req, res) => {
-//   const id = req.params.id;
-//   const tokenUserId = req.userId;
+  if (hotel.ownerId !== tokenUserId) {
+    return res.status(403).json({ message: "Not Authorized!" });
+  }
+  try {
+    if (hotel._id.toString() !== id) {
+      return res.status(403).json({ message: "Not Authorized!" });
+    }
+    const updatedHotel = await hotelModel.findByIdAndUpdate(id, body, {
+      new: true,
+    });
+    res.status(200).json(updatedHotel);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to update hotels" });
+  }
+};
 
-//   try {
-//     const post = await prisma.post.findUnique({
-//       where: { id },
-//     });
+exports.deleteHotel = async (req, res) => {
+  const id = req.params.id;
+  const tokenUserId = req.userId;
 
-//     if (post.userId !== tokenUserId) {
-//       return res.status(403).json({ message: "Not Authorized!" });
-//     }
+  try {
+    const hotel = await hotelModel.findById(id);
 
-//     await prisma.post.delete({
-//       where: { id },
-//     });
+    if (hotel.ownerId !== tokenUserId) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
 
-//     res.status(200).json({ message: "Post deleted" });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ message: "Failed to delete post" });
-//   }
-// };
+    await hotelModel.deleteOne({ _id: id });
+
+    res.status(200).json({ message: "Hotel deleted" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to delete hotel" });
+  }
+};
