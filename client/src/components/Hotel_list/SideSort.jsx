@@ -246,7 +246,7 @@ const SideSort = () => {
           </div>
         </div>
         <div
-          className="mt-8 w-full bg-black rounded-[14px] text-center py-3 cursor-pointer mb-6"
+          className="mt-8 w-full bg-black rounded-[14px] text-center py-3 cursor-pointer mb-6 hover:bg-gray-800 duration-150"
           onClick={handleFilter}
         >
           <span className="text-white font-medium">APPLY</span>

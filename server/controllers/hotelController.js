@@ -47,24 +47,10 @@ exports.getHotel = async (req, res) => {
   try {
     const hotel = await hotelModel.findById(id);
 
-    // const token = req.cookies?.token;
+    if (!hotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
 
-    // if (token) {
-    //   jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
-    //     if (!err) {
-    //       const saved = await prisma.savedPost.findUnique({
-    //         where: {
-    //           userId_postId: {
-    //             postId: id,
-    //             userId: payload.id,
-    //           },
-    //         },
-    //       });
-    //       res.status(200).json({ ...post, isSaved: saved ? true : false });
-    //     }
-    //   });
-    // }
-    // res.status(200).json({ ...post, isSaved: false });
     res.status(200).json(hotel);
   } catch (err) {
     console.log(err);
@@ -72,9 +58,47 @@ exports.getHotel = async (req, res) => {
   }
 };
 
+exports.getHotelsByOwnerAndId = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+
+  try {
+    const hotel = await hotelModel.find({ ownerId: userId });
+    console.log(hotel);
+
+    if (!hotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
+
+    return res.status(200).json(hotel);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Failed to get hotel" });
+  }
+};
+
+exports.getHotelByUserId = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const hotel = await hotelModel.findOne({ ownerId: userId });
+    if (!hotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
+    return res.status(200).json(hotel);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "Failed to get hotel" });
+  }
+};
+
 exports.addHotel = async (req, res) => {
   const body = req.body;
   const tokenUserId = req.userId;
+  console.log(tokenUserId);
+
+  if (!body) {
+    return res.status(400).json({ message: "All fields are required!" });
+  }
 
   try {
     const newHotel = await hotelModel.create({
@@ -110,7 +134,6 @@ exports.updateHotel = async (req, res) => {
     res.status(500).json({ message: "Failed to update hotels" });
   }
 };
-
 exports.deleteHotel = async (req, res) => {
   const id = req.params.id;
   const tokenUserId = req.userId;

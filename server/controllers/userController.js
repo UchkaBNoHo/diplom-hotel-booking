@@ -39,16 +39,33 @@ exports.updateUser = async (req, res) => {
   const body = req.body;
 
   console.log(tokenUserId, id);
+  console.log(body);
 
   if (id !== tokenUserId) {
     return res.status(403).json({ message: "Not Authorized!" });
   }
 
+
   try {
-    const updatedUser = await userModel.findByIdAndUpdate(id, body, {
-      new: true,
+    const updatedUser = await userModel.findByIdAndUpdate(
+      id,
+      {
+        bio: body.bio,
+        email: body.email,
+        profilePicture: body.profilePicture,
+        userName: body.userName,
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json({
+      bio: body.bio,
+      email: body.email,
+      profilePicture: body.profilePicture,
+      userId: body.userId,
+      userName: body.userName,
     });
-    res.status(200).json(updatedUser);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -62,13 +79,17 @@ exports.addLoved = async (req, res) => {
   try {
     const user = await userModel.findById(tokenUserId);
 
+    let message = "";
+
     if (!user.lovedHotels.includes(id)) {
       user.lovedHotels.push(id);
+      message = "Hotel added to loved hotels";
     } else {
-      return res.status(400).json({ message: "Already loved this hotel" });
+      user.lovedHotels.pull(id);
+      message = "Hotel removed from loved hotels";
     }
     await user.save();
-    res.status(200).json({ message: "Hotel loved successfully" });
+    res.status(200).json({ message });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

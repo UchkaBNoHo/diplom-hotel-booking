@@ -10,27 +10,27 @@ import { useLoaderData } from "react-router-dom";
 import HotelCard from "../HotelCard/HotelCard";
 
 const Hotels = () => {
-  const posts = useLoaderData();
-  console.log(posts);
+  const hotels = useLoaderData();
+  console.log(hotels);
   return (
     <section className="w-[65%] max-lg:w-full">
       <h1 className="font-medium text-2xl">
-        {posts.length} Result{posts.length <= 1 ? "" : "s"}
+        {hotels.length} Result{hotels.length <= 1 ? "" : "s"}
       </h1>
       <div className="w-full h-[400px] border-[1px] rounded-[16px] overflow-hidden mt-6">
-        <Map posts={posts} />
+        <Map hotels={hotels} />
       </div>
       <div className="flex flex-wrap justify-between mt-7 gap-y-10 gap-x-1 w-full">
-        {posts &&
-          posts.map((post) => {
+        {hotels &&
+          hotels.map((hotel) => {
             return (
               // eslint-disable-next-line react/jsx-key
               <HotelCard
-                post={post}
-                img={post.img || hotel1}
-                title={post.name}
-                address={post.address}
-                price={post.pricePerNight}
+                hotel={hotel}
+                img={hotel.img || hotel1}
+                title={hotel.name}
+                address={hotel.address}
+                price={hotel.pricePerNight}
                 listCard={true}
               />
             );

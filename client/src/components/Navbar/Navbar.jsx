@@ -12,12 +12,15 @@ import { LiaHotelSolid } from "react-icons/lia";
 import { CiLogout } from "react-icons/ci";
 import { RxDashboard } from "react-icons/rx";
 import { IoLogIn } from "react-icons/io5";
+import Cookies from "js-cookie";
 
 const Navbar = ({ isSingleHotel }) => {
   const { currentUser, updateUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  console.log(currentUser);
+  const token = Cookies.get("token");
+
+  // console.log(currentUser);
 
   // console.log(currentUser);
 
@@ -47,11 +50,7 @@ const Navbar = ({ isSingleHotel }) => {
         </h1>
       </div>
       <div className="flex gap-8 items-center">
-        <div className="flex gap-2 items-center mr-3 cursor-pointer hover:bg-gray-100 duration-150 px-3 py-2 rounded-[32px] max-[560px]:hidden">
-          <h3>USD</h3>
-          <img src={england} alt="" className="w-5 h-5" />
-        </div>
-        {currentUser === null && (
+        {!token && (
           <div className="">
             <Link
               to="/login"
@@ -67,7 +66,7 @@ const Navbar = ({ isSingleHotel }) => {
             </Link>
           </div>
         )}
-        {currentUser.token && (
+        {token && (
           <div className="relative z-10 flex items-center gap-5">
             <div className="pr-3 h-fit border-r-[1px] border-black flex gap-2 items-center max-[560px]:hidden">
               <MdOutlineFavorite className="text-xl cursor-pointer" />
@@ -84,7 +83,7 @@ const Navbar = ({ isSingleHotel }) => {
                 <IoIosMenu className="text-2xl cursor-pointer" />
                 <div className="avatar">
                   <div className="w-8 rounded-full">
-                    <img src={currentUser?.profilePicture} />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" />
                   </div>
                 </div>
               </div>

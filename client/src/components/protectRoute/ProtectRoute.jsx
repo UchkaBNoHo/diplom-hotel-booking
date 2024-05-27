@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import Cookies from "js-cookie";
 
 const ProtectRoute = ({ children, redirectTo = "/" }) => {
-  const { currentUser } = useContext(AuthContext);
+  const token = Cookies.get("token");
 
-  if (currentUser) {
+  if (token) {
     return <Navigate to={redirectTo} />;
   }
 

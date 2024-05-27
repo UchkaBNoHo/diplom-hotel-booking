@@ -21,7 +21,7 @@ const EditProfile = () => {
 
   const [loading, setLoading] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const [avatar, setAvatar] = useState(currentUser?.profilePicture);
+  const [avatar, setAvatar] = useState([]);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -31,12 +31,13 @@ const EditProfile = () => {
 
     try {
       const res = await instance.put(
-        `http://localhost:5000/api/users/${user._id}`,
+        `http://localhost:5000/api/users/${user.userId}`,
         {
           email: email || user.email,
           userName: userName || user.userName,
           bio: bio || user.bio,
-          profilePicture: avatar || user.avatar,
+          profilePicture: avatar[0] || user.profilePicture,
+          userId: user.userId,
         },
         {
           headers: {
@@ -60,6 +61,7 @@ const EditProfile = () => {
       setLoading(false);
     }
   };
+  console.log("zurag", avatar);
   return (
     <div className="w-[60%]">
       <Toaster position="top-center" />
@@ -68,7 +70,7 @@ const EditProfile = () => {
         <div className="flex items-center gap-4">
           <div className="w-[60px] h-[60px] rounded-full bg-slate-300 overflow-hidden">
             <img
-              src={avatar || image}
+              src={avatar[0] || currentUser.profilePicture || image}
               alt=""
               className="w-full h-full object-cover"
             />
@@ -88,10 +90,10 @@ const EditProfile = () => {
               cloudName: "dopjmx6no",
               uploadPreset: "hotel-booking",
               multiple: false,
-              maxImageFileSize: 2000000,
+              // maxImageFileSize: 2000000,
               folder: "avatars",
             }}
-            setAvatar={setAvatar}
+            setState={setAvatar}
           />
         </div>
       </div>

@@ -8,10 +8,15 @@ import EditProfile from "./per_components/edit_profile/EditProfile";
 import Password from "./per_components/password/Password";
 import { LiaHotelSolid } from "react-icons/lia";
 import AddHotel from "./per_components/add_hotel/AddHotel";
+import MyOrders from "./per_components/my_orders/MyOrders";
+import { useSearchParams } from "react-router-dom";
 
 const Profile = () => {
   // const user = JSON.parse(localStorage.getItem("user"));
-  const [component, setComponent] = useState("editProfile");
+  const [searchParams] = useSearchParams();
+  const [component, setComponent] = useState(
+    searchParams.get("text") || "editProfile"
+  );
   return (
     <main className="max-w-[1100px] m-auto">
       <Navbar isSingleHotel={true} />
@@ -33,6 +38,17 @@ const Profile = () => {
             >
               <LiaHotelSolid className="text-[15px]" />
               <h3 className="text-[14px]">Add Hotel</h3>
+            </div>
+            <div
+              className={
+                component === "myOrders"
+                  ? `bg-gray-100 rounded-[8px] flex items-center gap-2 px-4 py-3 hover:bg-gray-100 hover:rounded-[8px] cursor-pointer`
+                  : `flex items-center gap-2 px-4 py-3 hover:bg-gray-100 rounded-[8px] cursor-pointer`
+              }
+              onClick={() => setComponent("myOrders")}
+            >
+              <LiaHotelSolid className="text-[15px]" />
+              <h3 className="text-[14px]">My Orders</h3>
             </div>
           </div>
           <div className="">
@@ -68,6 +84,7 @@ const Profile = () => {
         {component === "editProfile" && <EditProfile />}
         {component === "password" && <Password />}
         {component === "addHotel" && <AddHotel />}
+        {component === "myOrders" && <MyOrders />}
       </div>
     </main>
   );
