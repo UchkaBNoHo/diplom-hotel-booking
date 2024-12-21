@@ -14,7 +14,9 @@ const SideCard = ({ data }) => {
   const [checked, setChecked] = useState(false);
   const [dateRange, setDateRange] = useState([null, null]);
   const [numberOfDays, setNumberOfDays] = useState(0);
-  // const [bookedDates, setBookedDates] = useState([]);
+  const [bookedDates, setBookedDates] = useState([]);
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
   const token = Cookies.get("token");
 
   const breakfastPrice = checked
@@ -27,30 +29,6 @@ const SideCard = ({ data }) => {
   const { RangePicker } = DatePicker;
 
   const dateFormat = "YYYY/MM/DD";
-  // const weekFormat = "MM/DD";
-  // const monthFormat = "YYYY/MM";
-  // console.log(checked);
-
-  // useEffect(() => {
-  //   // Fetch booked dates when the component mounts
-  //   const fetchBookedDates = async () => {
-  //     try {
-  //       const response = await instance.get(
-  //         `http://localhost:5000/api/orders/booked-dates/${data._id}`
-  //       );
-  //       if (response.data.success) {
-  //         setBookedDates(response.data.bookedDates);
-  //       } else {
-  //         toast.error("Failed to fetch booked dates");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching booked dates:", error);
-  //       toast.error("Error fetching booked dates");
-  //     }
-  //   };
-
-  //   fetchBookedDates();
-  // }, [data._id]);
 
   const handleDateChange = (dates) => {
     setDateRange(dates);
@@ -59,12 +37,36 @@ const SideCard = ({ data }) => {
       const endDate = dayjs(dates[1]);
       const days = endDate.diff(startDate, "day") + 1;
       setNumberOfDays(days);
+      setCheckInDate(startDate.format(dateFormat));
+      setCheckOutDate(endDate.format(dateFormat));
     } else {
       setNumberOfDays(0);
+      setCheckInDate(null);
+      setCheckOutDate(null);
     }
   };
-  // console.log(dateRange);
-  // console.log(numberOfDays);
+
+  console.log(data);
+
+  useEffect(() => {
+    const fetchBookedDates = async () => {
+      try {
+        const response = await instance.get(
+          `http://localhost:5000/api/orders/booked-dates/${data._id}`
+        );
+        console.log(response.data.bookedDates);
+        setBookedDates(response.data.bookedDates);
+      } catch (error) {
+        console.error("Error fetching booked dates:", error);
+      }
+    };
+    fetchBookedDates();
+  }, [data._id]);
+
+  // Disable dates that are booked
+  const disabledDate = (current) => {
+    return bookedDates.some((date) => dayjs(current).isSame(date, "day"));
+  };
 
   const makePaymnent = async () => {
     toast.loading("Loading...");
@@ -73,10 +75,9 @@ const SideCard = ({ data }) => {
     );
     const body = {
       data,
+      checkInDate,
+      checkOutDate,
     };
-    // const headers = {
-    //   "Content-Type": "application/json",
-    // };
     try {
       const response = await instance.post(
         "http://localhost:5000/api/orders/place",
@@ -92,29 +93,11 @@ const SideCard = ({ data }) => {
         window.location.replace(response.data.session_url);
       } else {
         toast.error("error");
-        // toast.loading("Loading...");
       }
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
     }
-
-    // const result = await stripe.redirectToCheckout({
-    //   sessionId: session.id,
-    // });
-
-    // if (result.error) {
-    //   console.log(result.error);
-    // }
-
-    // const disabledDate = (current) => {
-    //   // Disable past dates and booked dates
-    //   return (
-    //     current &&
-    //     (current < dayjs().endOf("day") ||
-    //       bookedDates.includes(current.format(dateFormat)))
-    //   );
-    // };
   };
   return (
     <>
@@ -145,7 +128,7 @@ const SideCard = ({ data }) => {
               name="date"
               format={dateFormat}
               onChange={handleDateChange}
-              // disabledDate={disabledDate}
+              disabledDate={disabledDate}
             />
           </div>
           <div className="flex flex-col">

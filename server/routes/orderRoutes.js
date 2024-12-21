@@ -8,11 +8,13 @@ const {
   deleteOrder,
   getAllOrdersBasedOnHotel,
   revenueOrder,
+  bookedDates,
 } = require("../controllers/orderController");
 
 const router = express.Router();
 
 // router.get('/', getAllOrders);
+router.get("/booked-dates/:hotelId", bookedDates);
 router.get("/:id", getAllOrdersBasedOnUser);
 router.get("/hotel/:id", getAllOrdersBasedOnHotel);
 router.post("/place", protect, PlaceOrder);

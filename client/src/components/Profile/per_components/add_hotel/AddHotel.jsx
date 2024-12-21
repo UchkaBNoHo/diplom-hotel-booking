@@ -392,6 +392,110 @@ const AddHotel = () => {
             >
               <span className="">Hot tubes</span>
             </label>
+            <input
+              type="checkbox"
+              name="Free breakfast"
+              id="Free breakfast"
+              onChange={handleConvenience}
+              className="hidden"
+            />
+            <label
+              htmlFor="Free breakfast"
+              className="flex justify-center items-center gap-2 px-4 py-3 rounded-[12px] cshadow hover:shadow-lg duration-200 cursor-pointer border-[0.6px]"
+            >
+              <span className="">Free breakfast</span>
+            </label>
+            <input
+              type="checkbox"
+              name="Options for pillow"
+              id="Options for pillow"
+              onChange={handleConvenience}
+              className="hidden"
+            />
+            <label
+              htmlFor="Options for pillow"
+              className="flex justify-center items-center gap-2 px-4 py-3 rounded-[12px] cshadow hover:shadow-lg duration-200 cursor-pointer border-[0.6px]"
+            >
+              <span className="">Options for pillow</span>
+            </label>
+            <input
+              type="checkbox"
+              name="Free parking"
+              id="Free parking"
+              onChange={handleConvenience}
+              className="hidden"
+            />
+            <label
+              htmlFor="Free parking"
+              className="flex justify-center items-center gap-2 px-4 py-3 rounded-[12px] cshadow hover:shadow-lg duration-200 cursor-pointer border-[0.6px]"
+            >
+              <span className="">Free parking</span>
+            </label>
+            <input
+              type="checkbox"
+              name="Gym or fitness"
+              id="Gym or fitness"
+              onChange={handleConvenience}
+              className="hidden"
+            />
+            <label
+              htmlFor="Gym or fitness"
+              className="flex justify-center items-center gap-2 px-4 py-3 rounded-[12px] cshadow hover:shadow-lg duration-200 cursor-pointer border-[0.6px]"
+            >
+              <span className="">Gym or fitness</span>
+            </label>
+            <input
+              type="checkbox"
+              name="Powerbank for the Road"
+              id="Powerbank for the Road"
+              onChange={handleConvenience}
+              className="hidden"
+            />
+            <label
+              htmlFor="Powerbank for the Road"
+              className="flex justify-center items-center gap-2 px-4 py-3 rounded-[12px] cshadow hover:shadow-lg duration-200 cursor-pointer border-[0.6px]"
+            >
+              <span className="">Powerbank for the Road</span>
+            </label>
+            <input
+              type="checkbox"
+              name="Rollaway Tent"
+              id="Rollaway Tent"
+              onChange={handleConvenience}
+              className="hidden"
+            />
+            <label
+              htmlFor="Rollaway Tent"
+              className="flex justify-center items-center gap-2 px-4 py-3 rounded-[12px] cshadow hover:shadow-lg duration-200 cursor-pointer border-[0.6px]"
+            >
+              <span className="">Rollaway Tent</span>
+            </label>
+            <input
+              type="checkbox"
+              name="Kid equipment"
+              id="Kid equipment"
+              onChange={handleConvenience}
+              className="hidden"
+            />
+            <label
+              htmlFor="Kid equipment"
+              className="flex justify-center items-center gap-2 px-4 py-3 rounded-[12px] cshadow hover:shadow-lg duration-200 cursor-pointer border-[0.6px]"
+            >
+              <span className="">Kid equipment</span>
+            </label>
+            <input
+              type="checkbox"
+              name="Car Service"
+              id="Car Service"
+              onChange={handleConvenience}
+              className="hidden"
+            />
+            <label
+              htmlFor="Car Service"
+              className="flex justify-center items-center gap-2 px-4 py-3 rounded-[12px] cshadow hover:shadow-lg duration-200 cursor-pointer border-[0.6px]"
+            >
+              <span className="">Car Service</span>
+            </label>
           </div>
         </div>
       </div>

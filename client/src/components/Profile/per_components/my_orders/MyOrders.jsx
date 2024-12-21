@@ -3,6 +3,7 @@ import instance from "../../../../../lib/axios";
 import { AuthContext } from "../../../../context/AuthContext";
 import moment from "moment";
 import { MdCancel } from "react-icons/md";
+import { Toaster, toast } from "sonner";
 
 const MyOrders = () => {
   const { currentUser } = useContext(AuthContext);
@@ -40,15 +41,18 @@ const MyOrders = () => {
       const res = await instance.delete(
         `http://localhost:5000/api/orders/${id}`
       );
-      console.log(res);
+      // console.log(res);
       setOrders(orders.filter((order) => order._id !== id));
+      toast.success("Order deleted successfully");
     } catch (error) {
       console.log(error);
+      toast.error(error?.response?.data?.message);
     }
   };
 
   return (
     <div className="w-[73%]">
+      <Toaster position="top-center" />
       <h1 className="text-xl font-medium mb-4">My Orders ({orders.length})</h1>
       <div className="">
         <table className="w-full bg-white border-collapse border-[1px] border-gray-300 rounded-[6px]">
@@ -92,7 +96,7 @@ const MyOrders = () => {
                   <td className="px-[14px] py-[12px] flex justify-center items-center">
                     <MdCancel
                       className="text-[20px] text-red-500 cursor-pointer hover:text-red-400"
-                      // onClick={handleDelete(order._id)}
+                      onClick={() => handleDelete(order._id)}
                     />
                   </td>
                 </tr>

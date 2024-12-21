@@ -9,6 +9,8 @@ const OrderModel = new mongoose.Schema(
     address: { type: String, required: true },
     payment: { type: Boolean, default: false },
     price: { type: Number, required: true },
+    checkInDate: { type: Date, required: true }, // Add checkInDate field
+    checkOutDate: { type: Date, required: true }, // Add checkOutDate field
   },
   { timestamps: true }
 );

@@ -21,7 +21,8 @@ const UserModel = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      default: "",
+      default:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
     },
     bio: {
       type: String,

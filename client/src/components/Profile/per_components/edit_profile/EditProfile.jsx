@@ -70,7 +70,7 @@ const EditProfile = () => {
         <div className="flex items-center gap-4">
           <div className="w-[60px] h-[60px] rounded-full bg-slate-300 overflow-hidden">
             <img
-              src={avatar[0] || currentUser.profilePicture || image}
+              src={avatar[0] || currentUser.profilePicture}
               alt=""
               className="w-full h-full object-cover"
             />

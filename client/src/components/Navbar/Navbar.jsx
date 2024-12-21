@@ -30,7 +30,7 @@ const Navbar = ({ isSingleHotel }) => {
       console.log(res);
       if (res.status === 200) {
         updateUser(null);
-        navigate("/login");
+        navigate.replace("/login");
       }
     } catch (err) {
       console.log(err);
@@ -46,7 +46,7 @@ const Navbar = ({ isSingleHotel }) => {
     >
       <div className="">
         <h1 className="text-2xl font-medium cursor-pointer max-md:text-[20px]">
-          <a href="#">BOOKLY</a>
+          <Link to="/">BOOKLY</Link>
         </h1>
       </div>
       <div className="flex gap-8 items-center">
@@ -83,7 +83,7 @@ const Navbar = ({ isSingleHotel }) => {
                 <IoIosMenu className="text-2xl cursor-pointer" />
                 <div className="avatar">
                   <div className="w-8 rounded-full">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" />
+                    <img src={currentUser.profilePicture} />
                   </div>
                 </div>
               </div>

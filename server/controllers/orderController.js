@@ -8,6 +8,10 @@ exports.PlaceOrder = async (req, res) => {
   console.log(data);
   console.log(data.data.pricePerNight);
   try {
+    const checkInDate = new Date(data.checkInDate);
+    const checkOutDate = new Date(checkInDate);
+    checkOutDate.setDate(checkOutDate.getDate() + data.numberOfDays - 1);
+
     const newOrder = new OrderModel({
       userId: req.userId,
       hotelId: data.data._id,
@@ -16,6 +20,8 @@ exports.PlaceOrder = async (req, res) => {
       address: data.data.address,
       price: data.totalPrice,
       payment: false,
+      checkInDate: checkInDate,
+      checkOutDate: checkOutDate,
     });
     await newOrder.save();
 
@@ -106,14 +112,14 @@ exports.getAllOrdersBasedOnHotel = async (req, res) => {
 
 exports.revenueOrder = async (req, res) => {
   const { id } = req.params;
-  console.log("hello boy",id);
+  console.log("hello boy", id);
 
   try {
     const orders = await OrderModel.find({
       hotelId: id,
       orderStatus: "Ordered",
     });
-    console.log("nigga",orders);
+    console.log("nigga", orders);
     const totalRevenue = orders.reduce((sum, order) => sum + order.price, 0);
     return res.status(200).json({ totalRevenue });
   } catch (error) {
@@ -121,3 +127,43 @@ exports.revenueOrder = async (req, res) => {
     res.status(500).json({ message: "Failed to calculate revenue" });
   }
 };
+
+exports.bookedDates = async (req, res) => {
+  const { hotelId } = req.params;
+  try {
+    const orders = await OrderModel.find({
+      hotelId,
+      orderStatus: "Ordered", // Assuming "Ordered" status indicates a successful booking
+    }).select("checkInDate checkOutDate");
+
+    const bookedDates = orders.reduce((dates, order) => {
+      const startDate = order.checkInDate.toDateString();
+      const endDate = order.checkOutDate.toDateString();
+
+      // Generate an array of dates between startDate and endDate
+      const dateRange = getDates(startDate, endDate);
+
+      // Add the dates to the array of bookedDates
+      return [...dates, ...dateRange];
+    }, []);
+
+    res.json({ bookedDates });
+  } catch (error) {
+    console.error("Error fetching booked dates:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Helper function to generate an array of dates between two dates
+function getDates(startDate, endDate) {
+  const dates = [];
+  let currentDate = new Date(startDate);
+  const endDateObj = new Date(endDate);
+
+  while (currentDate <= endDateObj) {
+    dates.push(new Date(currentDate).toDateString());
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+}
